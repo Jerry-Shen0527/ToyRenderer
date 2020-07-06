@@ -22,8 +22,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	lastX = xpos;
 	lastY = ypos;
 
-	camera.ProcessMouseMovement(xoffset, yoffset);
-}
+} 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
