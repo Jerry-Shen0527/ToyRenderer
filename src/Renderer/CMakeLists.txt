@@ -1,4 +1,10 @@
 aux_source_directory(. Renderer_src)
 include_directories(${PROJECT_SOURCE_DIR}/include/)
+find_package(assimp REQUIRED)
+include_directories(${ASSIMP_INCLUDE_DIRS})
+message("${ASSIMP_INCLUDE_DIRS}")
+
+message("${Renderer_src}")
 add_library(Renderer ${Renderer_src})
+link_directories(${ASSIMP_LIB_DIRS})
 target_link_libraries(Renderer glfw)
