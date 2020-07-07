@@ -1,4 +1,4 @@
-#include <Renderer.h>
+#include <Scene.h>
 #include <string>
 
 const std::string shader_path = "C:\\Users\\Jerry\\WorkSpace\\ToyRenderer\\resources\\Shaders\\";
@@ -17,10 +17,5 @@ unsigned int indices[] = { // 注意索引从0开始!
 
 int main()
 {
-    Renderer r((shader_path + "Simple\\1.vert").c_str(), (shader_path + "Simple\\1.frag").c_str());
-
-    r.get_vertex(vertices, 0, sizeof(vertices));
-    r.get_element(indices, sizeof(indices));
-
-    r.exec([] {});
+	
 }

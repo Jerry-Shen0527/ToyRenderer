@@ -4,29 +4,33 @@
 #include <functional>
 #include <GLFW/glfw3.h>
 
+#include "Camera.h"
+#include "Scene.h"
+
 class Renderer
 {
 public:
 	Renderer() :width(800), height(800) { init(); }
 	Renderer(int w, int h) :width(w), height(h) { init(); }
+	
 	void init();
-	void exec(std::function<void(void)> call_back);
+	void exec(std::function<void(void)> call_back = [] {});
 
-	//void set_cam(Camera& c) { cam = &c; }
-
-	Shader shader_;
-
-	const int get_width() { return width; }
-	const int get_height() { return height; }
+	void add_Shader(const Shader& shader) { shaders_.push_back(shader); }
+	void add_scene(const Scene&& scene) { scenes_.push_back(scene); }
 
 private:
 	int width;
 	int height;
 
-	static const size_t vbo_amount = 10;
+	std::vector<Scene> scenes_;
+
+	Camera cam;
+	std::vector<Shader> shaders_;
 
 	GLFWwindow* window;
 
-
-	//void processInput(GLFWwindow* window);
+	float deltaTime = 0.0f;
+	float lastFrame = 0.0f;
+	void processInput(GLFWwindow* window);
 };
