@@ -32,6 +32,7 @@ void Mesh::draw(Shader& shader)
 	// »æÖÆÍø¸ñ
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 	glBindVertexArray(0);

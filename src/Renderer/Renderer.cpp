@@ -79,18 +79,13 @@ void Renderer::exec(std::function<void(void)> call_back)
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-		processInput(window);
 
 		shader_.use();
 
 		// view/projection transformations
 		glm::mat4 projection = glm::perspective(glm::radians(cam.Zoom), (float)width / (float)height, 0.1f, 100.0f);
 		glm::mat4 view = cam.GetViewMatrix();
-		//glm::mat4 projection = glm::mat4(1.0f);
-		//glm::mat4 view = glm::mat4(1.0f);
 
-		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-		//projection = glm::perspective(glm::radians(45.0f), (float(width)) / height, 0.1f, 100.0f);
 
 		shader_.setMat4("projection", projection);
 		shader_.setMat4("view", view);
@@ -98,8 +93,8 @@ void Renderer::exec(std::function<void(void)> call_back)
 		// render the loaded model
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f)*0.3f);	// it's a bit too big for our scene, so scale it down
+		//model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		shader_.setMat4("model", model);
 		call_back();
 
@@ -107,6 +102,7 @@ void Renderer::exec(std::function<void(void)> call_back)
 		{
 			scene.draw(shader_);
 		}
+		processInput(window);
 		cam.ProcessMouseMovement(xoffset, yoffset);
 
 		glfwSwapBuffers(window);
