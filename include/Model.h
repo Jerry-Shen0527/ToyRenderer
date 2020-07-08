@@ -9,12 +9,16 @@ public:
 
 	std::vector<Texture> textures_loaded;
 
-	Model(char* path)
+	Model() {}
+
+	Model(char const* path)
 	{
 		load_model(path);
 	}
 
-	void draw(Shader shader);
+	void add_mesh(Mesh& mesh);
+	
+	void draw(Shader& shader);
 private:
 	std::vector<Mesh> meshes;
 	std::string directory;

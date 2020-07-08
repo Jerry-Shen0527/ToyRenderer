@@ -6,7 +6,7 @@ class Scene
 {
 public:
 	Scene() = default;
-		
+
 	void add_model(const Model& model) { models_.push_back(model); }
 	void add_camera(const Camera& camera) { cameras_.push_back(camera); }
 
@@ -21,7 +21,7 @@ public:
 		return {};
 	}
 
-	void Draw(Shader& shader)
+	void draw(Shader& shader)
 	{
 		for (auto& model : models_)
 		{

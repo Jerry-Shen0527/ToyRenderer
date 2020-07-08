@@ -10,9 +10,9 @@
 class Renderer
 {
 public:
-	Renderer() :width(800), height(800) { init(); }
+	Renderer() :width(1200), height(1200) { init(); }
 	Renderer(int w, int h) :width(w), height(h) { init(); }
-	
+
 	void init();
 	void exec(std::function<void(void)> call_back = [] {});
 
@@ -33,4 +33,9 @@ private:
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
 	void processInput(GLFWwindow* window);
+
+	static float xoffset;
+	static float yoffset; // reversed since y-coordinates go from bottom to top
+
+	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 };

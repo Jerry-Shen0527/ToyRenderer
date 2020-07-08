@@ -1,12 +1,16 @@
 #include <iostream>
 #include <Renderer.h>
-const float deltaTime = 0.0008f;
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 
 float lastX = 0;
 float lastY = 0;
 bool firstMouse = true;
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+float Renderer::xoffset;
+float Renderer::yoffset;
+
+void Renderer::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
 	if (firstMouse)
 	{
@@ -15,8 +19,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 		firstMouse = false;
 	}
 
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+	xoffset = xpos - lastX;
+	yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
 
 	lastX = xpos;
 	lastY = ypos;
@@ -45,7 +49,7 @@ void Renderer::init()
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	//glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
 
 	// tell GLFW to capture our mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -57,7 +61,7 @@ void Renderer::init()
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 }
 
 void Renderer::exec(std::function<void(void)> call_back)
@@ -66,26 +70,27 @@ void Renderer::exec(std::function<void(void)> call_back)
 
 	//by default
 	auto shader_ = shaders_[0];
+	shader_.use();
 
 	while (!glfwWindowShouldClose(window))
 	{
-		// per-frame time logic
-// --------------------
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		processInput(window);
 
-		// ------
-		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// don't forget to enable shader before setting uniforms
 		shader_.use();
 
 		// view/projection transformations
 		glm::mat4 projection = glm::perspective(glm::radians(cam.Zoom), (float)width / (float)height, 0.1f, 100.0f);
 		glm::mat4 view = cam.GetViewMatrix();
+		//glm::mat4 projection = glm::mat4(1.0f);
+		//glm::mat4 view = glm::mat4(1.0f);
+
+		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		//projection = glm::perspective(glm::radians(45.0f), (float(width)) / height, 0.1f, 100.0f);
 
 		shader_.setMat4("projection", projection);
 		shader_.setMat4("view", view);
@@ -94,14 +99,15 @@ void Renderer::exec(std::function<void(void)> call_back)
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		shader_.setMat4("model", model);
 		call_back();
 
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//glDrawElements(GL_TRIANGLES, vertex_count * 3, GL_UNSIGNED_INT, 0);
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		for (auto scene : scenes_)
+		{
+			scene.draw(shader_);
+		}
+		cam.ProcessMouseMovement(xoffset, yoffset);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

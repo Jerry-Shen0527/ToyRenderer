@@ -1,7 +1,13 @@
 #include <Model.h>
+#define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-void Model::draw(Shader shader)
+void Model::add_mesh(Mesh& mesh)
+{
+	meshes.push_back(mesh);
+}
+
+void Model::draw(Shader& shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 		meshes[i].draw(shader);
@@ -18,7 +24,7 @@ void Model::load_model(std::string path)
 		cout << "ERROR::ASSIMP::" << importer.GetErrorString() << endl;
 		return;
 	}
-	directory = path.substr(0, path.find_last_of('/'));
+	directory = path.substr(0, path.find_last_of('\\'));
 
 	process_node(scene->mRootNode, scene);
 }
@@ -125,7 +131,7 @@ std::vector<Texture> Model::load_material_textures(aiMaterial* mat, aiTextureTyp
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma)
 {
 	std::string filename = std::string(path);
-	filename = directory + '/' + filename;
+	filename = directory + '\\' + filename;
 
 	unsigned int textureID;
 	glGenTextures(1, &textureID);

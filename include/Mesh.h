@@ -1,12 +1,15 @@
+#include <Shader.h>	
 #include <string>
 #include <vector>
+#include <assimp/types.h>
 #include <glad/glad.h>
 #include <glm/glm/glm.hpp>
-#include <Shader.h>	
-#include <assimp/types.h>
 
 struct Vertex
 {
+	Vertex() {}
+	Vertex(glm::vec3& pos) { Position = pos; }
+	
 	glm::vec3 Position;
 	glm::vec3 Normal;
 	glm::vec2 TexCoords;
@@ -26,7 +29,7 @@ public:
     std::vector<Texture> textures;
 
 	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
-    void draw(Shader shader);
+    void draw(Shader& shader);
 
 private:
 
