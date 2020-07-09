@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Shader.h>	
 #include <string>
 #include <vector>
@@ -9,6 +11,7 @@ struct Vertex
 {
 	Vertex() {}
 	Vertex(glm::vec3& pos) { Position = pos; }
+	Vertex(glm::vec3& pos, glm::vec3& normal) { Position = pos; Normal = normal; }
 	
 	glm::vec3 Position;
 	glm::vec3 Normal;
@@ -24,6 +27,8 @@ struct Texture {
 class Mesh
 {
 public:
+	Mesh() {}
+	
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     std::vector<Texture> textures;

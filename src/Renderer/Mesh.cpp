@@ -22,7 +22,7 @@ void Mesh::draw(Shader& shader)
 		if (name == "texture_diffuse")
 			number = std::to_string(diffuseNr++);
 		////else if (name == "texture_specular")
-			number = std::to_string(specularNr++);
+		number = std::to_string(specularNr++);
 
 		shader.setFloat(("material." + name + number).c_str(), i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
@@ -31,9 +31,16 @@ void Mesh::draw(Shader& shader)
 
 	// 绘制网格
 	glBindVertexArray(VAO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	if (!indices.empty())
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	}
+	else
+	{
+		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+	}
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 	glBindVertexArray(0);
 }
@@ -49,9 +56,12 @@ void Mesh::setup_mesh()
 
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int),
-		&indices[0], GL_STATIC_DRAW);
+	if (!indices.empty())
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int),
+			&indices[0], GL_STATIC_DRAW);
+	}
 
 	// 顶点位置
 	glEnableVertexAttribArray(0);

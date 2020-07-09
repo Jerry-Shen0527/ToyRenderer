@@ -16,7 +16,7 @@ public:
 	void init();
 	void exec(std::function<void(void)> call_back = [] {});
 
-	void add_Shader(const Shader& shader) { shaders_.push_back(shader); }
+	void add_Shader(const Shader& shader);
 	void add_scene(const Scene&& scene) { scenes_.push_back(scene); }
 
 private:
@@ -25,7 +25,7 @@ private:
 
 	std::vector<Scene> scenes_;
 
-	Camera cam;
+	Camera *cam;
 	std::vector<Shader> shaders_;
 
 	GLFWwindow* window;

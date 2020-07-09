@@ -66,11 +66,12 @@ void Renderer::init()
 
 void Renderer::exec(std::function<void(void)> call_back)
 {
+	cam = &scenes_.front().get_cam();
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	//by default
 	auto shader_ = shaders_[0];
-	shader_.use();
+	//shader_.use();
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -80,30 +81,16 @@ void Renderer::exec(std::function<void(void)> call_back)
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		shader_.use();
+		//shader_.use();
 
-		// view/projection transformations
-		glm::mat4 projection = glm::perspective(glm::radians(cam.Zoom), (float)width / (float)height, 0.1f, 100.0f);
-		glm::mat4 view = cam.GetViewMatrix();
-
-
-		shader_.setMat4("projection", projection);
-		shader_.setMat4("view", view);
-
-		// render the loaded model
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f)*0.3f);	// it's a bit too big for our scene, so scale it down
-		//model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		shader_.setMat4("model", model);
 		call_back();
 
 		for (auto scene : scenes_)
 		{
-			scene.draw(shader_);
+			scene.draw(shader_, width, height);
 		}
 		processInput(window);
-		cam.ProcessMouseMovement(xoffset, yoffset);
+		cam->ProcessMouseMovement(xoffset, yoffset);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -111,6 +98,11 @@ void Renderer::exec(std::function<void(void)> call_back)
 
 	glfwTerminate();
 	return;
+}
+
+void Renderer::add_Shader(const Shader& shader)
+{
+	shaders_.push_back(shader);
 }
 
 void Renderer::processInput(GLFWwindow* window)
@@ -122,17 +114,17 @@ void Renderer::processInput(GLFWwindow* window)
 		glfwSetWindowShouldClose(window, true);
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		cam.ProcessKeyboard(FORWARD, deltaTime);
+		cam->ProcessKeyboard(FORWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		cam.ProcessKeyboard(BACKWARD, deltaTime);
+		cam->ProcessKeyboard(BACKWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		cam.ProcessKeyboard(LEFT, deltaTime);
+		cam->ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		cam.ProcessKeyboard(RIGHT, deltaTime);
+		cam->ProcessKeyboard(RIGHT, deltaTime);
 
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-		cam.ProcessKeyboard(UP, deltaTime);
+		cam->ProcessKeyboard(UP, deltaTime);
 
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-		cam.ProcessKeyboard(DOWN, deltaTime);
+		cam->ProcessKeyboard(DOWN, deltaTime);
 }
