@@ -129,4 +129,10 @@ void Renderer::processInput(GLFWwindow* window)
 		cam.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		cam.ProcessKeyboard(RIGHT, deltaTime);
+
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+		cam.ProcessKeyboard(UP, deltaTime);
+
+	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+		cam.ProcessKeyboard(DOWN, deltaTime);
 }
