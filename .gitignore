@@ -11,7 +11,7 @@ Models/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
+Textures/
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

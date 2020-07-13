@@ -1,3 +1,4 @@
+#pragma once
 #include <Mesh.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -6,9 +7,7 @@
 class Model
 {
 public:
-
-	std::vector<Texture> textures_loaded;
-
+	static std::vector<Texture> textures_loaded;
 	Model() {}
 
 	Model(char const* path)
@@ -17,11 +16,16 @@ public:
 	}
 
 	void add_mesh(Mesh& mesh);
-	
 	void draw(Shader& shader);
+
+	glm::vec3& get_pos() { return  pos; }
+	void set_pos(const glm::vec3& position);
+
 private:
 	std::vector<Mesh> meshes;
 	std::string directory;
+
+	glm::vec3 pos;
 
 	void load_model(std::string path);
 	void process_node(aiNode* node, const aiScene* scene);

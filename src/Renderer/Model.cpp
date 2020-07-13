@@ -9,8 +9,17 @@ void Model::add_mesh(Mesh& mesh)
 
 void Model::draw(Shader& shader)
 {
+	glm::mat4 model(1.0f);
+	model = glm::translate(model, pos);
+	shader.setMat4("model", model);
+
 	for (unsigned int i = 0; i < meshes.size(); i++)
 		meshes[i].draw(shader);
+}
+
+void Model::set_pos(const glm::vec3& position)
+{
+	pos = position;
 }
 
 void Model::load_model(std::string path)
