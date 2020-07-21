@@ -8,7 +8,7 @@ Models/
 *.user
 *.userosscache
 *.sln.docstates
-
+cmake-build-debug/
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 Textures/
