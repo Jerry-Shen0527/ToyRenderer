@@ -1,10 +1,11 @@
 #include <GeoTransform.h>
 
-GeoTransform::GeoTransform() :scale_(1, 1, 1), q_(0, 0, 0, 1), pos_(0, 0, 0)
+GeoTransform::GeoTransform() :scale_(1, 1, 1), q_(glm::radians(0.0f), glm::vec3(0, 0, 0)), pos_(0, 0, 0)
 {
+	int i = 0;
 }
 
-GeoTransform::GeoTransform(glm::vec3& vec) : pos_(vec), scale_(1, 1, 1), q_(0, glm::vec3(0, 0, 1))
+GeoTransform::GeoTransform(glm::vec3& vec) : pos_(vec), scale_(1, 1, 1), q_(0, glm::vec3(0, 0, 0))
 {
 }
 

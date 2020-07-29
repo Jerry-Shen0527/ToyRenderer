@@ -8,9 +8,6 @@ void Light::init()
 
 	shader_.use();
 	shader_.setVec3("color", color);
-
-	model_.set_pos(glm::vec3(0, 0, 2));
-
 }
 
 Shader& Light::get_shader()
@@ -20,7 +17,7 @@ Shader& Light::get_shader()
 
 void Light::translate(const glm::vec3& position)
 {
-	model_.set_pos(position);
+	model_.translate(position);
 }
 
 void Light::draw(Shader& shader)

@@ -5,6 +5,8 @@
 #include "Renderer.h"
 #include <CommonSettings.h>
 
+#include "Assimp_Loader.h"
+
 float vertices[] = {
 	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f,
 	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
@@ -65,21 +67,22 @@ int main()
 		vertices_vec.push_back(Vertex(glm::vec3(vertices[i], vertices[i + 1], vertices[i + 2]), glm::vec3(vertices[i + 3], vertices[i + 4], vertices[i + 5]),glm::vec2(vertices[i+6],vertices[i+7])));
 	}
 
-	Mesh mesh(vertices_vec, indices_vec, std::vector<Texture>());
+	//Mesh mesh(vertices_vec, indices_vec, std::vector<Texture>());
 
-	Model model;
-	model.add_mesh(mesh);
-	//Model model((resource_path + "Models\\nanosuit\\nanosuit.obj").c_str());
+	//Model model;
+	//model.add_mesh(mesh);
+	AssimpLoader loader((resource_path + "Models\\nanosuit\\nanosuit.obj").c_str());
+	Model model(loader.get_model());
 
-	Light light;
-	light.set_model(model);
-	light.translate(glm::vec3(0, 4, 0));
+	//Light light;
+	//light.set_model(model);
+	//light.translate(glm::vec3(0, 4, 0));
 
 
 	Scene scene;
 	scene.add_model(model);
 	scene.add_camera(Camera());
-	scene.add_light(light);
+	//scene.add_light(light);
 	renderer.add_scene(std::move(scene));
 
 	scene.activate_cam(0);

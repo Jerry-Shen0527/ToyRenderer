@@ -14,7 +14,7 @@ void Model::draw(Shader& shader)
 		meshes[i].draw(shader);
 }
 
-void Model::set_pos(const glm::vec3& position)
+void Model::translate(const glm::vec3& position)
 {
 	geo_.translate(position);
 }

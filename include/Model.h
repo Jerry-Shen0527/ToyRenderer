@@ -18,7 +18,7 @@ public:
 	void draw(Shader& shader);
 
 	glm::vec3& get_pos() { return  pos; }
-	void set_pos(const glm::vec3& position);
+	void translate(const glm::vec3& position);
 
 private:
 	std::vector<Mesh> meshes;

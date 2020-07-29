@@ -1,6 +1,5 @@
 #include "../../include/Mesh.h"
 
-#include <Mesh.h>
 #include <string>
 
 
