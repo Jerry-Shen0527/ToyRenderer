@@ -3,31 +3,28 @@
 #include "Model.h"
 #include "glm/glm/glm.hpp"
 
-class Light
+class Light :public AbstractModel
 {
 public:
-	Light() :color(0.0f, 1.0f, 1.0f)
-	{
-		init();
-		model_.set_pos(glm::vec3(0,0,2));
-	}
-
-	void draw();
+	Light() :color(0.0f, 1.0f, 1.0f) { init(); }
+	Light(std::vector<Mesh> &meshes) : model_(meshes) { init(); }
 
 	void init();
 
-	void set_model(Model& model) { model_ = model; }
 	Shader& get_shader();
 	void set_shader(Shader& shader) { shader_ = shader; }
+	void set_model(Model& model) { model_ = model; }
 
 	glm::vec3& get_pos() { return  model_.get_pos(); }
-	void set_pos(const glm::vec3& position);
+	void translate(const glm::vec3& position);
+
+	void draw() { draw(shader_); }
+
+	//light can be drawn directly
+	void draw(Shader& shader) override;
 
 private:
 	glm::vec3 color;
-
-	//Mesh mesh_;
 	Model model_;
-
 	Shader shader_;
 };

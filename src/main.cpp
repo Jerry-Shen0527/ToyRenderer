@@ -3,8 +3,7 @@
 #include <iostream>
 
 #include "Renderer.h"
-
-const std::string resource_path = "C:\\Users\\Jerry\\WorkSpace\\ToyRenderer\\resources\\";
+#include <CommonSettings.h>
 
 float vertices[] = {
 	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f,
@@ -74,7 +73,7 @@ int main()
 
 	Light light;
 	light.set_model(model);
-	light.set_pos(glm::vec3(0, 2, -2));
+	light.translate(glm::vec3(0, 4, 0));
 
 
 	Scene scene;

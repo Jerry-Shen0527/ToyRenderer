@@ -1,4 +1,12 @@
+#include "../../include/Mesh.h"
+
 #include <Mesh.h>
+#include <string>
+
+
+
+#include "../../include/Shader.h"
+#include "../../include/glad/glad.h"
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned> indices, std::vector<Texture> textures)
 {

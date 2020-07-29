@@ -2,20 +2,15 @@
 
 #include "CommonSettings.h"
 
-void Light::draw()
-{
-	glm::mat4 model(1.0f);
-	model = glm::translate(model, model_.get_pos());
-	shader_.setMat4("model", model);
-	model_.draw(shader_);
-}
-
 void Light::init()
 {
 	shader_.init((resource_path + "Shaders\\Light\\light.vert").c_str(), (resource_path + "Shaders\\Light\\light.frag").c_str());
 
 	shader_.use();
 	shader_.setVec3("color", color);
+
+	model_.set_pos(glm::vec3(0, 0, 2));
+
 }
 
 Shader& Light::get_shader()
@@ -23,7 +18,12 @@ Shader& Light::get_shader()
 	return shader_;
 }
 
-void Light::set_pos(const glm::vec3& position)
+void Light::translate(const glm::vec3& position)
 {
 	model_.set_pos(position);
+}
+
+void Light::draw(Shader& shader)
+{
+	model_.draw(shader);
 }

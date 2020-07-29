@@ -4,16 +4,15 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-class Model
+#include "AbstractModel.h"
+
+class Model :public AbstractModel
 {
 public:
-	static std::vector<Texture> textures_loaded;
 	Model() {}
 
-	Model(char const* path)
-	{
-		load_model(path);
-	}
+	Model(const std::vector<Mesh>&& meshes) { this->meshes = meshes; }
+	Model(const std::vector<Mesh>& meshes) { this->meshes = meshes; }
 
 	void add_mesh(Mesh& mesh);
 	void draw(Shader& shader);
@@ -23,14 +22,7 @@ public:
 
 private:
 	std::vector<Mesh> meshes;
-	std::string directory;
-
 	glm::vec3 pos;
-
-	void load_model(std::string path);
-	void process_node(aiNode* node, const aiScene* scene);
-	Mesh process_mesh(aiMesh* mesh, const aiScene* scene);
-	std::vector<Texture> load_material_textures(aiMaterial* mat, aiTextureType type, std::string typeName);
 };
 
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);

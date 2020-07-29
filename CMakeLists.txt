@@ -16,7 +16,7 @@ add_subdirectory("include")
 
 include_directories(${PROJECT_SOURCE_DIR}/include/)
 
-add_executable(main src/main.cpp "include/Light.h" "include/CommonSettings.h" "src/Geometry/HEMesh.cpp" "include/Geometry/HEMesh.h")
+add_executable(main src/main.cpp  "include/ModelFactory.h")
 target_link_libraries(main Renderer)
 
 
