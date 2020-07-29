@@ -45,3 +45,9 @@ unsigned int TextureFromFile(const std::string& directory, const std::string& fi
 
 	return textureID;
 }
+
+Texture::Texture(const std::string& path, const std::string& directory, std::string type)
+{
+	id = TextureFromFile(path, directory);
+	this->type = type;
+}

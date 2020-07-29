@@ -69,7 +69,8 @@ int main()
 
 	Mesh mesh(vertices_vec, indices_vec, std::vector<Texture>());
 
-	//mesh.add_texture(Texture(resource_path, "Textures\\container.jpg"));
+	mesh.add_texture(Texture(resource_path, "Textures\\container2.png"));
+	mesh.add_texture(Texture(resource_path, "Textures\\container2_specular.png","texture_specular"));
 
 	Model model;
 	model.add_mesh(mesh);
@@ -90,7 +91,7 @@ int main()
 	scene.activate_cam(0);
 
 	Shader shader;
-	shader.init((resource_path + "Shaders\\light_experiments\\Material.vert").c_str(), (resource_path + "Shaders\\light_experiments\\Material.frag").c_str());
+	shader.init((resource_path + "Shaders\\light_experiments\\LightMap.vert").c_str(), (resource_path + "Shaders\\light_experiments\\LightMap.frag").c_str());
 
 	renderer.add_Shader(shader);
 

@@ -32,8 +32,6 @@ void Scene::draw(Shader& shader, int width, int height)
 	shader_.setMat4("view", view);
 	shader_.setVec3("viewPos", cam.Position);
 
-	shader_.setVec3("material.ambient", 0.1f, 0.1f, 0.1f);
-	shader_.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
 	shader_.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
 	shader_.setFloat("material.shininess", 32.0f);
 

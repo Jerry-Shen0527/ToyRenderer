@@ -5,10 +5,7 @@ unsigned int TextureFromFile(const std::string& directory, const std::string& fi
 class Texture {
 public:
 	Texture() {}
-	Texture(const std::string& path, const std::string& directory)
-	{
-		id = TextureFromFile(path, directory);
-	}
+	Texture(const std::string& path, const std::string& directory, std::string type = "texture_diffuse");
 
 public:
 	unsigned int id;
