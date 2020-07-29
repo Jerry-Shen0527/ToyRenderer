@@ -15,6 +15,8 @@ public:
 	void set_shader(Shader& shader) { shader_ = shader; }
 	void set_model(Model& model) { model_ = model; }
 
+	void add_light_to_shader(Shader& shader, int id);
+
 	glm::vec3& get_pos() { return  model_.get_pos(); }
 	void translate(const glm::vec3& position);
 

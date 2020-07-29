@@ -15,6 +15,12 @@ Shader& Light::get_shader()
 	return shader_;
 }
 
+void Light::add_light_to_shader(Shader& shader,int id)
+{
+	shader.use();
+	shader.setVec3("light_pos" + std::to_string(id), get_pos());
+}
+
 void Light::translate(const glm::vec3& position)
 {
 	model_.translate(position);

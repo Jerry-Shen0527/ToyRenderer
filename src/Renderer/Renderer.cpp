@@ -38,7 +38,6 @@ void Renderer::init()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// --------------------
 	window = glfwCreateWindow(width, height, "OpenGL", NULL, NULL);
 	if (window == NULL)
 	{
@@ -75,13 +74,12 @@ void Renderer::exec(std::function<void(void)> call_back)
 
 	while (!glfwWindowShouldClose(window))
 	{
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(float(37/255.0), float(37 / 255.0), float(38 / 255.0), 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		//shader_.use();
 
 		call_back();
 

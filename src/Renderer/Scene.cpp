@@ -15,12 +15,14 @@ void Scene::draw(Shader& shader, int width, int height)
 
 	glm::mat4 projection = glm::perspective(glm::radians(cam.Zoom), (float)width / (float)height, 0.1f, 100.0f);
 	glm::mat4 view = cam.GetViewMatrix();
-	for (auto light : lights_)
+	for (int i = 0; i < lights_.size(); ++i)
 	{
-		light.get_shader().use();
-		light.get_shader().setMat4("projection", projection);
-		light.get_shader().setMat4("view", view);
-		light.draw();
+		lights_[i].get_shader().use();
+		lights_[i].get_shader().setMat4("projection", projection);
+		lights_[i].get_shader().setMat4("view", view);
+		lights_[i].draw();
+
+		lights_[i].add_light_to_shader(shader, i);
 	}
 
 	auto shader_ = shader;
@@ -32,10 +34,8 @@ void Scene::draw(Shader& shader, int width, int height)
 	for (auto& model_ : models_)
 	{
 		// render the loaded model
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f) );
-		shader_.setMat4("model", model);
+
+		model_.get_geo().shader_set(shader_);
 		model_.draw(shader_);
 	}
 }

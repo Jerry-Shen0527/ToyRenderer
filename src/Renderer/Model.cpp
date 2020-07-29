@@ -1,6 +1,4 @@
 #include <Model.h>
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
 
 void Model::add_mesh(Mesh& mesh)
 {

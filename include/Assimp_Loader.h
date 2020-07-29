@@ -4,6 +4,7 @@
 
 #include "Mesh.h"
 #include "Model.h"
+#include <Texture.h>
 
 class AssimpLoader
 {

@@ -19,7 +19,7 @@ public:
 	void draw(Shader& shader, int width, int height);
 
 private:
-	size_t active_index{};
+	size_t active_index;
 
 	std::vector<Model> models_;
 	std::vector<Camera> cameras_;

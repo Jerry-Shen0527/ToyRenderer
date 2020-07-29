@@ -25,4 +25,3 @@ private:
 	glm::vec3 pos;
 };
 
-unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);

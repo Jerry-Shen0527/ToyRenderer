@@ -25,7 +25,7 @@ private:
 
 	std::vector<Scene> scenes_;
 
-	Camera *cam;
+	Camera* cam;
 	std::vector<Shader> shaders_;
 
 	GLFWwindow* window;
