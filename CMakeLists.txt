@@ -16,7 +16,7 @@ add_subdirectory("include")
 
 include_directories(${PROJECT_SOURCE_DIR}/include/)
 
-add_executable(main src/main.cpp  "include/ModelFactory.h" "include/Texture.h")
+add_executable(main src/main.cpp  "include/ModelFactory.h" "include/Texture.h" "include/Vertex.h")
 target_link_libraries(main Renderer)
 
 

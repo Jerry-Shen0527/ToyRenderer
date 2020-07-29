@@ -7,16 +7,15 @@
 #include "stb_image.h"
 
 
-unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma)
+unsigned int TextureFromFile(const std::string& directory, const std::string& filename, bool gamma)
 {
-	std::string filename = std::string(path);
-	filename = directory + '\\' + filename;
+	auto full_name = directory+ '\\' + filename;
 
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
 
 	int width, height, nrComponents;
-	unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+	unsigned char* data = stbi_load(full_name.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
 		GLenum format;
@@ -40,7 +39,7 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
 	}
 	else
 	{
-		std::cout << "Texture failed to load at path: " << path << std::endl;
+		std::cout << "Texture failed to load at path: " << directory << std::endl;
 		stbi_image_free(data);
 	}
 

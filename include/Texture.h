@@ -1,11 +1,11 @@
 #pragma once
 
 #include <assimp/types.h>
-unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);
+unsigned int TextureFromFile(const std::string& directory, const std::string& file, bool gamma = false);
 class Texture {
 public:
 	Texture() {}
-	Texture(const char* path, const std::string& directory)
+	Texture(const std::string& path, const std::string& directory)
 	{
 		id = TextureFromFile(path, directory);
 	}

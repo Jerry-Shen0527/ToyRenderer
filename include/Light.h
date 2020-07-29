@@ -6,27 +6,36 @@
 class Light :public AbstractModel
 {
 public:
-	Light() :color(0.0f, 1.0f, 1.0f) { init(); }
+	Light()  { init(); }
 	Light(std::vector<Mesh> &meshes) : model_(meshes) { init(); }
 
 	void init();
 
 	Shader& get_shader();
-	void set_shader(Shader& shader) { shader_ = shader; }
-	void set_model(Model& model) { model_ = model; }
+	void set_shader(Shader& shader);
+	void set_model(Model& model);
 
 	void add_light_to_shader(Shader& shader, int id);
 
-	glm::vec3& get_pos() { return  model_.get_pos(); }
+	glm::vec3& get_pos();
 	void translate(const glm::vec3& position);
 
-	void draw() { draw(shader_); }
+	void draw();
 
 	//light can be drawn directly
 	void draw(Shader& shader) override;
 
+	glm::vec3& get_color();
 private:
 	glm::vec3 color;
+public:
+	void set_color(const glm::vec3& color);
+private:
 	Model model_;
 	Shader shader_;
+
+	glm::vec3 ambient;
+	glm::vec3 diffuse;
+	glm::vec3 specular;
 };
+

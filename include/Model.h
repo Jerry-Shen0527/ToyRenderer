@@ -1,15 +1,12 @@
 #pragma once
 #include <Mesh.h>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
 
 #include "AbstractModel.h"
 
 class Model :public AbstractModel
 {
 public:
-	Model() {}
+	Model();
 
 	Model(const std::vector<Mesh>&& meshes) { this->meshes = meshes; }
 	Model(const std::vector<Mesh>& meshes) { this->meshes = meshes; }
@@ -17,11 +14,8 @@ public:
 	void add_mesh(Mesh& mesh);
 	void draw(Shader& shader);
 
-	glm::vec3& get_pos() { return  pos; }
-	void translate(const glm::vec3& position);
+	glm::vec3& get_pos();
 
 private:
 	std::vector<Mesh> meshes;
-	glm::vec3 pos;
 };
-

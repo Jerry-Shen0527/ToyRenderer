@@ -67,28 +67,30 @@ int main()
 		vertices_vec.push_back(Vertex(glm::vec3(vertices[i], vertices[i + 1], vertices[i + 2]), glm::vec3(vertices[i + 3], vertices[i + 4], vertices[i + 5]),glm::vec2(vertices[i+6],vertices[i+7])));
 	}
 
-	//Mesh mesh(vertices_vec, indices_vec, std::vector<Texture>());
+	Mesh mesh(vertices_vec, indices_vec, std::vector<Texture>());
 
-	//Model model;
-	//model.add_mesh(mesh);
-	AssimpLoader loader((resource_path + "Models\\nanosuit\\nanosuit.obj").c_str());
-	Model model(loader.get_model());
+	//mesh.add_texture(Texture(resource_path, "Textures\\container.jpg"));
 
-	//Light light;
-	//light.set_model(model);
-	//light.translate(glm::vec3(0, 4, 0));
+	Model model;
+	model.add_mesh(mesh);
+	//AssimpLoader loader((resource_path + "Models\\nanosuit\\nanosuit.obj").c_str());
+	//Model model(loader.get_model());
+
+	Light light;
+	light.set_model(model);
+	light.translate(glm::vec3(1, 4, -3));
 
 
 	Scene scene;
 	scene.add_model(model);
 	scene.add_camera(Camera());
-	//scene.add_light(light);
+	scene.add_light(light);
 	renderer.add_scene(std::move(scene));
 
 	scene.activate_cam(0);
 
 	Shader shader;
-	shader.init((resource_path + "Shaders\\Simple\\1.vert").c_str(), (resource_path + "Shaders\\Simple\\1.frag").c_str());
+	shader.init((resource_path + "Shaders\\light_experiments\\Material.vert").c_str(), (resource_path + "Shaders\\light_experiments\\Material.frag").c_str());
 
 	renderer.add_Shader(shader);
 

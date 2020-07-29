@@ -14,8 +14,13 @@ public:
 	void scale(real s);
 
 	void shader_set(Shader& shader);
+
+	
 protected:
 	glm::vec3 scale_;
 	glm::vec3 pos_;
+public:
+	glm::vec3& get_pos();
+protected:
 	glm::qua<real> q_;
 };

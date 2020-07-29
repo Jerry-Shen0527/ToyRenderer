@@ -2,8 +2,6 @@
 
 #include <string>
 
-
-
 #include "../../include/Shader.h"
 #include "../../include/glad/glad.h"
 
@@ -50,6 +48,11 @@ void Mesh::draw(Shader& shader)
 	}
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 	glBindVertexArray(0);
+}
+
+void Mesh::add_texture(Texture& texture)
+{
+	textures.push_back(texture);
 }
 
 void Mesh::setup_mesh()

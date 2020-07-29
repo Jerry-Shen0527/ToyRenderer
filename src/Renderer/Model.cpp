@@ -1,5 +1,9 @@
 #include <Model.h>
 
+Model::Model() 
+{
+}
+
 void Model::add_mesh(Mesh& mesh)
 {
 	meshes.push_back(mesh);
@@ -12,8 +16,8 @@ void Model::draw(Shader& shader)
 		meshes[i].draw(shader);
 }
 
-void Model::translate(const glm::vec3& position)
+glm::vec3& Model::get_pos()
 {
-	geo_.translate(position);
+	return geo_.get_pos();
 }
 

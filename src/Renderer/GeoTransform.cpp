@@ -39,3 +39,8 @@ void GeoTransform::shader_set(Shader& shader)
 
 	shader.setMat4("model", model);
 }
+
+glm::vec3& GeoTransform::get_pos()
+{
+	return pos_;
+}
