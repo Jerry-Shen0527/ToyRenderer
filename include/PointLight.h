@@ -1,10 +1,10 @@
 #include <AbstractLight.h>
 
-class PointLight:public AbstractLight
+class PointLight :public AbstractLight
 {
 public:
-	PointLight()  { init(); }
-	PointLight(std::vector<Mesh> &meshes) : model_(meshes) { init(); }
+	PointLight() { init(); }
+	PointLight(std::vector<Mesh>& meshes) : model_(meshes) { init(); }
 
 	void init();
 
@@ -20,7 +20,6 @@ public:
 
 	GeoTransform& get_geo();
 
-
 	glm::vec3& get_color();
 	//glm::vec3 color;
 	//void set_color(const glm::vec3& color);
@@ -28,12 +27,7 @@ private:
 	Model model_;
 	Shader shader_;
 
-	glm::vec3 ambient;
-	glm::vec3 diffuse;
-	glm::vec3 specular;
-
 	real constant;
 	real linear;
 	real quadratic;
 };
-

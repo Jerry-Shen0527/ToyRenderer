@@ -1,9 +1,10 @@
 #pragma once
 #include <Mesh.h>
 
-#include "AbstractModel.h"
+#include "GeoTransform.h"
 
-class Model :public AbstractModel
+
+class Model 
 {
 public:
 	Model();
@@ -18,4 +19,8 @@ public:
 
 private:
 	std::vector<Mesh> meshes;
+
+	GeoTransform geo_;
+public:
+	GeoTransform& get_geo();
 };

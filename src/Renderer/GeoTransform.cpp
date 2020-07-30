@@ -33,9 +33,10 @@ void GeoTransform::shader_set(Shader& shader)
 {
 	glm::mat4 model(1.0f);
 
-	model = glm::scale(model, scale_);
-	model = glm::mat4_cast(q_) * model;
 	model = glm::translate(model, pos_);
+	model = glm::mat4_cast(q_) * model;
+	model = glm::scale(model, scale_);
+
 
 	shader.setMat4("model", model);
 }

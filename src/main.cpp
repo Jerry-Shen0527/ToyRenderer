@@ -77,10 +77,10 @@ int main()
 	//AssimpLoader loader((resource_path + "Models\\nanosuit\\nanosuit.obj").c_str());
 	//Model model(loader.get_model());
 
-	Light light;
+	PointLight light;
 	light.set_model(model);
-	light.translate(glm::vec3(1, 4, -3));
-
+	light.translate(glm::vec3(1, 4, -1));
+	light.get_geo().scale(0.5);
 
 	Scene scene;
 	scene.add_model(model);

@@ -1,6 +1,6 @@
 #pragma once
 #include "Camera.h"
-#include "Light.h"
+#include "PointLight.h"
 #include "Model.h"
 
 class Scene
@@ -10,7 +10,7 @@ public:
 
 	void add_model(const Model& model) { models_.push_back(model); }
 	void add_camera(const Camera& camera) { cameras_.push_back(camera); }
-	void add_light(const Light& light) { lights_.push_back(light); }
+	void add_light(const PointLight& light) { lights_.push_back(light); }
 
 	void activate_cam(int index) { active_index = index; }
 
@@ -23,7 +23,7 @@ private:
 
 	std::vector<Model> models_;
 	std::vector<Camera> cameras_;
-	std::vector<Light> lights_;
+	std::vector<AbstractLight> lights_;
 
 	Camera default_camera;
 

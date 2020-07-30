@@ -21,3 +21,8 @@ glm::vec3& Model::get_pos()
 	return geo_.get_pos();
 }
 
+GeoTransform& Model::get_geo()
+{
+	return geo_;
+}
+
