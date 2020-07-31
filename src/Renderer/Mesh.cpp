@@ -1,9 +1,8 @@
-#include "../../include/Mesh.h"
+
+#include "Mesh.h"
 
 #include <string>
 
-#include "../../include/Shader.h"
-#include "../../include/glad/glad.h"
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned> indices, std::vector<Texture> textures)
 {
@@ -18,7 +17,7 @@ void Mesh::draw(Shader& shader)
 {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
-	for (unsigned int i = 0; i < textures.size(); i++)
+	for (int i = 0; i < textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i); // 在绑定之前激活相应的纹理单元
 		// 获取纹理序号（diffuse_textureN 中的 N）

@@ -1,5 +1,8 @@
+#pragma once
+
 #include <PointLight.h>
 
+#include "AbstractLight.h"
 #include "CommonSettings.h"
 
 void PointLight::init()
@@ -9,7 +12,7 @@ void PointLight::init()
 	diffuse = vec3(0.5f, 0.5f, 0.5f);
 	specular = vec3(1.0f, 1.0f, 1.0f);
 
-	shader_.init((resource_path + "Shaders\\Light\\light.vert").c_str(), (resource_path + "Shaders\\Light\\light.frag").c_str());
+	shader_.init(resource_path + "Shaders\\Light\\light.vert", resource_path + "Shaders\\Light\\light.frag");
 
 	shader_.use();
 	shader_.setVec3("color", specular);
@@ -27,22 +30,15 @@ void PointLight::set_model(Model& model)
 
 void PointLight::add_light_to_shader(Shader& shader, int id)
 {
-	id++;
 	shader.use();
 
-	shader.setVec3("light" + std::to_string(id) + ".ambient", ambient);
-	shader.setVec3("light" + std::to_string(id) + ".diffuse", diffuse);
-	shader.setVec3("light" + std::to_string(id) + ".specular", specular);
-	shader.setVec3("light" + std::to_string(id) + ".position", get_pos());
-
-	shader.setFloat("light" + std::to_string(id) + ".constant", 1.0f);
-	shader.setFloat("light" + std::to_string(id) + ".linear", 0.09f);
-	shader.setFloat("light" + std::to_string(id) + ".quadratic", 0.032f);
-}
-
-glm::vec3& PointLight::get_pos()
-{
-	return model_.get_pos();
+	shader.setVec3("pointLights[" + std::to_string(id) + "].ambient", ambient);
+	shader.setVec3("pointLights[" + std::to_string(id) + "].diffuse", diffuse);
+	shader.setVec3("pointLights[" + std::to_string(id) + "].specular", specular);
+	shader.setVec3("pointLights[" + std::to_string(id) + "].position", get_geo().get_pos());
+	shader.setFloat("pointLights[" + std::to_string(id) + "].constant", 1.0f);
+	shader.setFloat("pointLights[" + std::to_string(id) + "].linear", 0.09f);
+	shader.setFloat("pointLights[" + std::to_string(id) + "].quadratic", 0.032f);
 }
 
 void PointLight::translate(const glm::vec3& position)
@@ -58,4 +54,9 @@ void PointLight::draw()
 GeoTransform& PointLight::get_geo()
 {
 	return model_.get_geo();
+}
+
+void PointLight::set_cam_matrix(Camera& camera)
+{
+	camera.setShader(shader_);
 }

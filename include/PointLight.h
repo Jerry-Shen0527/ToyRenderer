@@ -1,4 +1,6 @@
+#pragma once
 #include <AbstractLight.h>
+#include <Model.h>
 
 class PointLight :public AbstractLight
 {
@@ -13,14 +15,13 @@ public:
 
 	void add_light_to_shader(Shader& shader, int id) override;
 
-	glm::vec3& get_pos();
 	void translate(const glm::vec3& position);
 
-	void draw();
+	void draw() override;
 
 	GeoTransform& get_geo();
 
-	glm::vec3& get_color();
+	void set_cam_matrix(Camera& camera) override;
 	//glm::vec3 color;
 	//void set_color(const glm::vec3& color);
 private:

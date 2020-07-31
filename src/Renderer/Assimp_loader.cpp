@@ -6,8 +6,7 @@
 
 #include "Mesh.h"
 
-std::vector<Texture> AssimpLoader:: textures_loaded;
-
+std::vector<Texture> AssimpLoader::textures_loaded;
 
 void AssimpLoader::load_model(std::string path)
 {
@@ -39,8 +38,6 @@ void AssimpLoader::process_node(aiNode* node, const aiScene* scene)
 	}
 }
 
-
-
 std::vector<Texture> AssimpLoader::load_material_textures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	std::vector<Texture> textures;
@@ -61,9 +58,16 @@ std::vector<Texture> AssimpLoader::load_material_textures(aiMaterial* mat, aiTex
 		if (!skip)
 		{   // 如果纹理还没有被加载，则加载它
 			Texture texture;
-			texture.id = TextureFromFile(str.C_Str(), directory);
+			if (typeName == "texture_diffuse")
+			{
+				texture.id = TextureFromFile(directory, str.C_Str());
+			}
+			else
+			{
+				texture.id = TextureFromFile(directory, str.C_Str());
+			}
 			texture.type = typeName;
-			texture.path = str.C_Str();
+			texture.path = directory.c_str();
 			textures.push_back(texture);
 			textures_loaded.push_back(texture); // 添加到已加载的纹理中
 		}
@@ -87,7 +91,7 @@ Mesh AssimpLoader::process_mesh(aiMesh* mesh, const aiScene* scene)
 		vector.y = mesh->mVertices[i].y;
 		vector.z = mesh->mVertices[i].z;
 		vertex.Position = vector;
-		
+
 		vector.x = mesh->mNormals[i].x;
 		vector.y = mesh->mNormals[i].y;
 		vector.z = mesh->mNormals[i].z;
@@ -136,4 +140,3 @@ std::vector<Mesh>& AssimpLoader::get_meshes()
 {
 	return meshes;
 }
-

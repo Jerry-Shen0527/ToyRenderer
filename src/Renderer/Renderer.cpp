@@ -61,6 +61,39 @@ void Renderer::init()
 		return;
 	}
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
+	//GLuint depthMapFBO;
+	//glGenFramebuffers(1, &depthMapFBO);
+
+	//const GLuint SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+
+	//GLuint depthMap;
+	//glGenTextures(1, &depthMap);
+	//glBindTexture(GL_TEXTURE_2D, depthMap);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	//glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+	//glDrawBuffer(GL_NONE);
+	//glReadBuffer(GL_NONE);
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//// 1. 首选渲染深度贴图
+	//glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+	//glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	//glClear(GL_DEPTH_BUFFER_BIT);
+	//ConfigureShaderAndMatrices();
+	//RenderScene();
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//// 2. 像往常一样渲染场景，但这次使用深度贴图
+	//glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//ConfigureShaderAndMatrices();
+	//glBindTexture(GL_TEXTURE_2D, depthMap);
 }
 
 void Renderer::exec(std::function<void(void)> call_back)
@@ -71,15 +104,13 @@ void Renderer::exec(std::function<void(void)> call_back)
 	//by default
 	auto shader_ = shaders_[0];
 	//shader_.use();
-
 	while (!glfwWindowShouldClose(window))
 	{
-		glClearColor(float(37/255.0), float(37 / 255.0), float(38 / 255.0), 1.0f);
+		glClearColor(float(37 / 255.0), float(37 / 255.0), float(38 / 255.0), 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-
 
 		call_back();
 
@@ -125,4 +156,9 @@ void Renderer::processInput(GLFWwindow* window)
 
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 		cam->ProcessKeyboard(DOWN, deltaTime);
+
+	if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS)
+		shaders_[0].setBool("bling", true);
+	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+		shaders_[0].setBool("bling", false);
 }
